@@ -404,6 +404,7 @@ const ProfileBoostModal = ({ isOpen, onClose, onBoostPurchased }) => {
                   onClick={() => setSelectedDuration(option.duration)}
                 >
                   {option.popular && <PopularBadge>Most Popular</PopularBadge>}
+                  }
                   
                   <OptionHeader>
                     <OptionTitle>{option.title}</OptionTitle>

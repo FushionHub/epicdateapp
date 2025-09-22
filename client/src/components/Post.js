@@ -163,6 +163,7 @@ const Post = ({ post: initialPost }) => {
           </AuthorInfo>
         </PostHeader>
         {post.text_content && <PostContent>{post.text_content}</PostContent>}
+        }
         {post.image_url && (
           <PostImage
             src={post.image_url}

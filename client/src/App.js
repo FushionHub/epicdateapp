@@ -78,32 +78,51 @@ const AppContent = () => {
 
           {/* Private Routes */}
           <Route path="/" element={<ProtectedRoute><AdvancedDashboard /></ProtectedRoute>} />
+          }
           <Route path="/classic" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          }
           <Route path="/verify" element={<ProtectedRoute><Verification /></ProtectedRoute>} />
+          }
           <Route path="/conversations" element={<ProtectedRoute><ConversationsPage /></ProtectedRoute>} />
+          }
           <Route path="/chat/:conversationType/:conversationId" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
+          }
           <Route path="/profile/:userId" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          }
           <Route path="/subscriptions" element={<ProtectedRoute><SubscriptionPage /></ProtectedRoute>} />
+          }
           <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
+          }
           <Route path="/settings/privacy" element={<ProtectedRoute><PrivacySettingsPage /></ProtectedRoute>} />
+          }
           <Route path="/settings/email" element={<ProtectedRoute><EmailSettingsPage /></ProtectedRoute>} />
+          }
           <Route path="/verify-identity" element={<ProtectedRoute><KYCPage /></ProtectedRoute>} />
+          }
 
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
+          }
 
           {/* Feature Routes */}
           <Route path="/find-friends" element={<ProtectedRoute><FindFriendsPage /></ProtectedRoute>} />
+          }
           <Route path="/reels" element={<ProtectedRoute><ReelsPage /></ProtectedRoute>} />
+          }
           <Route path="/reels/upload" element={<ProtectedRoute><UploadReelPage /></ProtectedRoute>} />
+          }
 
           {/* Marketplace Routes */}
           <Route path="/marketplace" element={<ProtectedRoute><MarketplacePage /></ProtectedRoute>} />
+          }
           <Route path="/marketplace/new" element={<ProtectedRoute><CreateListingPage /></ProtectedRoute>} />
+          }
           <Route path="/listing/:listingId" element={<ProtectedRoute><ListingDetailPage /></ProtectedRoute>} />
+          }
 
           {/* Group Chat Routes */}
           <Route path="/groups/new" element={<ProtectedRoute><CreateGroupPage /></ProtectedRoute>} />
+          }
         </Routes>
       </Router>
     </>
