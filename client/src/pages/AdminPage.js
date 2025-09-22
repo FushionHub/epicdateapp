@@ -4,6 +4,7 @@ import AdManager from '../components/AdManager';
 import SiteSettings from '../components/SiteSettings';
 import UserManagement from '../components/UserManagement';
 import ListingManagement from '../components/ListingManagement';
+import AdvancedAnalyticsDashboard from '../components/AdvancedAnalyticsDashboard';
 
 const AdminPageContainer = styled.div`
   padding: 2rem;
@@ -48,6 +49,9 @@ const AdminPage = () => {
         <TabButton active={activeTab === 'ads'} onClick={() => setActiveTab('ads')}>
           Ad Management
         </TabButton>
+        <TabButton active={activeTab === 'analytics'} onClick={() => setActiveTab('analytics')}>
+          Advanced Analytics
+        </TabButton>
       </TabContainer>
 
       <div>
@@ -55,6 +59,7 @@ const AdminPage = () => {
         {activeTab === 'listings' && <ListingManagement />}
         {activeTab === 'settings' && <SiteSettings />}
         {activeTab === 'ads' && <AdManager />}
+        {activeTab === 'analytics' && <AdvancedAnalyticsDashboard />}
       </div>
     </AdminPageContainer>
   );

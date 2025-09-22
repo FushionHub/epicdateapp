@@ -28,6 +28,7 @@ import MarketplacePage from './pages/MarketplacePage';
 import CreateListingPage from './pages/CreateListingPage';
 import ListingDetailPage from './pages/ListingDetailPage';
 import CreateGroupPage from './pages/CreateGroupPage';
+import AdvancedDashboard from './pages/AdvancedDashboard';
 
 import { useAuth } from './context/AuthContext';
 import { useSettings, SettingsProvider } from './context/SettingsContext';
@@ -76,7 +77,8 @@ const AppContent = () => {
           <Route path="/confirm-login" element={<ConfirmLoginPage />} />
 
           {/* Private Routes */}
-          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/" element={<ProtectedRoute><AdvancedDashboard /></ProtectedRoute>} />
+          <Route path="/classic" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/verify" element={<ProtectedRoute><Verification /></ProtectedRoute>} />
           <Route path="/conversations" element={<ProtectedRoute><ConversationsPage /></ProtectedRoute>} />
           <Route path="/chat/:conversationType/:conversationId" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />

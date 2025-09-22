@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useAuth } from '../context/AuthContext';
 import BoostPostModal from './BoostPostModal'; // Import the modal
 import { boostPost } from '../services/supabaseService'; // Import the service
+import VirtualGiftModal from './VirtualGiftModal';
+import { trackUserInteraction } from '../services/advancedFeatures';
 
 const PostContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border};
@@ -65,6 +67,20 @@ const BoostButton = styled.button`
   }
 `;
 
+const GiftButton = styled.button`
+  background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 0.5rem;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+`;
+
 const BoostedLabel = styled.span`
   color: ${({ theme }) => theme.colors.primary};
   font-weight: bold;
@@ -77,6 +93,8 @@ const Post = ({ post: initialPost }) => {
   const [post, setPost] = useState(initialPost);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBoosting, setIsBoosting] = useState(false);
+  const [showGiftModal, setShowGiftModal] = useState(false);
+  const [hasViewed, setHasViewed] = useState(false);
 
   const isOwnPost = currentUser && currentUser.uid === post.user_id;
 
@@ -97,6 +115,26 @@ const Post = ({ post: initialPost }) => {
     }
   };
 
+  const handleLike = async () => {
+    await trackUserInteraction('post', post.id, 'like');
+  };
+
+  const handleComment = async () => {
+    await trackUserInteraction('post', post.id, 'comment');
+  };
+
+  const handleShare = async () => {
+    await trackUserInteraction('post', post.id, 'share');
+  };
+
+  // Track view when component mounts
+  React.useEffect(() => {
+    if (!hasViewed) {
+      trackUserInteraction('post', post.id, 'view');
+      setHasViewed(true);
+    }
+  }, [post.id, hasViewed]);
+
   return (
     <>
       <BoostPostModal
@@ -104,6 +142,14 @@ const Post = ({ post: initialPost }) => {
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirmBoost}
         loading={isBoosting}
+      />
+      <VirtualGiftModal
+        isOpen={showGiftModal}
+        onClose={() => setShowGiftModal(false)}
+        receiverId={post.user_id}
+        receiverName={post.author.name}
+        context="post"
+        contextId={post.id}
       />
       <PostContainer>
         <PostHeader>
@@ -124,8 +170,15 @@ const Post = ({ post: initialPost }) => {
           />
         )}
 
-        {isOwnPost && (
-          <PostFooter>
+        <PostFooter>
+          {!isOwnPost && (
+            <GiftButton onClick={() => setShowGiftModal(true)}>
+              🎁 Send Gift
+            </GiftButton>
+          )}
+          
+          {isOwnPost && (
+            <>
             {post.is_boosted ? (
               <BoostedLabel>
                 Boosted until {new Date(post.boost_expires_at).toLocaleDateString()}
@@ -135,8 +188,9 @@ const Post = ({ post: initialPost }) => {
                 Boost Post
               </BoostButton>
             )}
-          </PostFooter>
-        )}
+            </>
+          )}
+        </PostFooter>
       </PostContainer>
     </>
   );
